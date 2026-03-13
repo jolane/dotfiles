@@ -1,0 +1,28 @@
+[user]
+  name = Jolane
+  email = jolane.synott@vista.com
+[core]
+  editor = nvim
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[url "git@github.com:99designs"]
+  insteadOf = https://github.com/99designs
+[url "git@gitlab.com:"]
+  insteadOf = https://gitlab.com/
+[url "git@gitlab.com:vistaprint-org/expert-services"]
+  insteadOf = https://gitlab.com/vistaprint-org/expert-services
+[url "git@gitlab.com:vistaprint-org/99designs"]
+  insteadOf = https://gitlab.com/vistaprint-org/99designs
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  dark = true      # or light = true, or omit for auto-detection
+  side-by-side = true
+[merge]
+  conflictStyle = zdiff3
+[diff]
+  context = 100
+  features = decorations
