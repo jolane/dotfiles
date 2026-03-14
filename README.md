@@ -11,11 +11,13 @@ with a consistent **Catppuccin Frappe** theme throughout.
 | `brew` | Homebrew formulae, casks, and taps (via `brew bundle`) | N/A -- standalone |
 | `ghostty` | Ghostty terminal config (Catppuccin Frappe, JetBrains Mono, translucent) | `~/.config/ghostty/` |
 | `gitconfig` | Global Git config (delta pager, SSH rewrites, zdiff3 merges) | `~/.gitconfig` |
+| `lazygit` | Lazygit config with Catppuccin Frappe blue theme | `~/.config/lazygit/` |
+| `lazysql` | Lazysql config plus shell wrapper for loading secrets via 1Password | `~/.config/lazysql/` |
 | `nvim` | Neovim config with lazy.nvim, LSP, Telescope, Treesitter | `~/.config/nvim/` |
 | `opencode` | OpenCode AI assistant config, skills, and instructions | `~/.config/opencode/` |
 | `starship` | Starship prompt (minimal, language versions right-aligned) | `~/.config/starship.toml` |
 | `zellij` | Zellij multiplexer config (tmux compat layer, vim navigation) | `~/.config/zellij/` |
-| `zshrc` | Zsh config (vi-mode, completions, aliases, NVM, Starship) | `~/.zshrc` |
+| `zshrc` | Modular Zsh config (`~/.zshrc` loader plus `~/.config/zsh/*.zsh`) | `~/.zshrc`, `~/.config/zsh/` |
 
 ## Prerequisites
 
@@ -27,7 +29,7 @@ Homebrew and all other dependencies are installed by the bootstrap script.
 ## Installation
 
 ```bash
-git clone git@github.com:<user>/dotfiles.git ~/dotfiles
+git clone git@github.com:jolane/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
@@ -39,6 +41,9 @@ The install script will:
 3. Run `brew bundle` to install all packages from the Brewfile
 4. Symlink each config package into `$HOME` via `stow --dotfiles`
 5. Install OpenCode dependencies via `bun`
+
+The current stowed packages are: `ghostty`, `gitconfig`, `lazygit`,
+`lazysql`, `nvim`, `opencode`, `starship`, `zellij`, and `zshrc`.
 
 If stow encounters a conflict (existing file at the target path), it will
 warn you and skip that package. Remove or move the conflicting file, then
@@ -84,13 +89,16 @@ servers are auto-installed through Mason.
 
 | Binding | Action |
 |---------|--------|
-| `<leader>e` | Toggle file explorer (Neo-tree) |
+| `<leader>e` | Reveal current file in Neo-tree on the left |
 | `<leader>ff` | Find files (Telescope) |
 | `<leader>fg` | Live grep (Telescope) |
 | `<leader>fb` | Open buffers (Telescope) |
 | `<leader>fh` | Help tags (Telescope) |
 
 **LSP servers:** gopls, ts_ls, eslint, lua_ls, marksman
+
+Neo-tree is configured to show dotfiles and gitignored files while still
+hiding the `.git` directory.
 
 ## Shell Aliases
 
@@ -103,8 +111,26 @@ servers are auto-installed through Mason.
 | `...` | `cd ../..` |
 | `reload` | `source ~/.zshrc` |
 
+## Shell Layout
+
+The top-level `~/.zshrc` is a small loader that sources modular config files
+from `~/.config/zsh/`:
+
+- `completion.zsh`
+- `keybindings.zsh`
+- `environment.zsh`
+- `secrets.zsh`
+- `prompt.zsh`
+- `aliases.zsh`
+- `functions.zsh`
+
+Notable shell helpers:
+
+- `take <dir>` creates a directory and enters it
+- `sql` launches `lazysql` through `op run` using `~/.config/lazysql/.env`
+
 ## Theme
 
-Catppuccin Frappe is applied consistently across Ghostty, Neovim, and Zellij
-for a unified appearance. The terminal font is JetBrains Mono at size 15 with
-background opacity at 0.7 and blur.
+Catppuccin Frappe is applied across Ghostty, Neovim, Zellij, Starship, and
+Lazygit for a unified appearance. The terminal font is JetBrains Mono Nerd
+Font at size 15 with background opacity at 0.7 and blur.
