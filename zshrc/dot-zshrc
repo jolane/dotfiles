@@ -54,9 +54,13 @@ export CT_ARTIFACTORY_TOKEN=$(security find-generic-password -a "$USER" -s "CT_A
 
 eval "$(starship init zsh)"
 
+# ls => eza
 alias ls='eza --tree --icons --level=1'
 alias ll='eza -lah --icons'
 alias tt='eza --tree --level=2 --icons'
+
+# cat => bat
+alias cat="bat"
 
 # better directory navigation
 alias ..='cd ..'
@@ -69,3 +73,6 @@ take() {
   mkdir -p "$1" && cd "$1"
 }
 
+sql() {
+  op run --env-file="$HOME/Library/Application Support/lazysql/passwords" -- lazysql
+}

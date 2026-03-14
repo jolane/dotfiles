@@ -2,9 +2,14 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+[](#a6d189)\
 $directory\
+[](fg:#a6d189 bg:#81c8be)\
 $git_branch\
 $git_status\
+[](fg:#81c8be bg:#babbf1)\
+$time\
+[ ](fg:#babbf1)\
 $fill\
 $lua\
 $golang\
@@ -18,13 +23,13 @@ $character"""
 add_newline = false 
 
 [directory]
-style = 'bold fg:dark_blue'
+style = 'bg:#a6d189 fg:#303446'
 format = '[$path ]($style)'
-truncation_length = 3
 truncate_to_repo = false
 
 [directory.substitutions]
-'Projects' = ''
+"Projects" = ''
+"~" = "󱐋"
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
@@ -54,6 +59,17 @@ symbol = ' '
 symbol = " "
 
 [git_branch]
-style = 'fg:green'
+style = 'bg:#81c8be fg:#303446'
 symbol = ' '
-format = ' [$symbol$branch ]($style)'
+format = '[ $symbol$branch]($style)'
+
+[git_status]
+style = 'bg:#81c8be fg:#303446'
+format = "[ $all_status$ahead_behind ]($style)"
+
+[time]
+disabled = false
+style = "bg:#babbf1 fg:#303446"
+format = '[  $time ]($style)'
+use_12hr = false
+time_format = '%d/%m %I:%M'
