@@ -4,6 +4,8 @@ path=("$HOME/Projects/99designs/99dev/bin" $path)
 path=("$HOME/.opencode/bin" $path)
 
 export PATH
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 export NVM_DIR="$HOME/.nvm"
 
