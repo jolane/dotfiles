@@ -5,6 +5,13 @@ return {
     -- optional but recommended
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   },
+  opts = {
+    pickers = {
+      find_files = {
+        hidden = true
+      }
+    }
+  },
   config = function()
     local builtin = require('telescope.builtin')
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
