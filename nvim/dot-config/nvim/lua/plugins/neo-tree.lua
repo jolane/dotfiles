@@ -9,20 +9,14 @@ return {
   lazy = false, -- neo-tree will lazily load itself
   opts = {
     filesystem = {
-      filtered_items = {
-        visible = false, -- hide filtered items on open
-        hide_gitignored = true,
-        hide_dotfiles = false,
-        hide_by_name = {
-          ".github",
-          ".gitignore",
-          "package-lock.json",
-          ".changeset",
-          ".prettierrc.json",
+        filtered_items = {
+          visible = false, -- hide filtered items on open
+          hide_gitignored = false,
+          hide_dotfiles = false,
+          hide_by_name = {},
+          never_show = { ".git" },
         },
-        never_show = { ".git" },
       },
-    },
   },
   config = function(_, opts)
     require("neo-tree").setup(opts)

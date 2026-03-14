@@ -1,0 +1,21 @@
+ConfigFile = '~/.config/lazysql/config.toml'
+
+[application]
+DefaultPageSize = 50
+DisableSidebar = false
+SidebarOverlay = false
+MaxQueryHistoryPerConnection = 100
+TreeWidth = 30
+JSONViewerWordWrap = false
+DefaultLimit = 50
+
+[[database]]
+Name = "create_app read-only"
+Provider = "mysql"
+DBName = "create_app"
+URL = "mysql://${env:CREATE_DB_USERNAME}:${env:CREATE_DB_PASSWORD}@127.0.0.1:${port}/create_app"
+ReadOnly = true
+Commands = [
+  { Command = "ssh -N -L ${port}:${env:CREATE_DB_HOST}:3306 ${env:CREATE_DB_SSH_USERNAME}@${env:CREATE_DB_SSH_HOST}", WaitForPort = "${port}" }
+]
+

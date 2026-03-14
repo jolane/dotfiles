@@ -15,6 +15,8 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES=(
   ghostty
   gitconfig
+  lazygit
+  lazysql
   nvim
   opencode
   starship

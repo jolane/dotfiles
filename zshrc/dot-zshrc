@@ -1,78 +1,18 @@
-autoload -Uz compinit
-compinit
-zmodload zsh/complist
+export XDG_CONFIG_HOME="$HOME/.config"
 
-bindkey -v
+typeset -a zsh_config_files=(
+  "$XDG_CONFIG_HOME/zsh/completion.zsh"
+  "$XDG_CONFIG_HOME/zsh/keybindings.zsh"
+  "$XDG_CONFIG_HOME/zsh/environment.zsh"
+  "$XDG_CONFIG_HOME/zsh/secrets.zsh"
+  "$XDG_CONFIG_HOME/zsh/prompt.zsh"
+  "$XDG_CONFIG_HOME/zsh/aliases.zsh"
+  "$XDG_CONFIG_HOME/zsh/functions.zsh"
+)
 
-autoload -Uz history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
+for config_file in "${zsh_config_files[@]}"; do
+  [ -r "$config_file" ] && source "$config_file"
+done
 
-bindkey '^[[A' history-beginning-search-backward-end
-bindkey '^[[B' history-beginning-search-forward-end
-bindkey "${terminfo[kcuu1]}" history-beginning-search-backward-end
-bindkey "${terminfo[kcud1]}" history-beginning-search-forward-end
-
-bindkey '^R' history-incremental-search-backward
-bindkey '^@' expand-or-complete
-
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' menu select
-zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
-zstyle ':completion:*:warnings' format '%F{red}no matches found%f'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-export PATH="$PATH:/usr/local/bin"
-export PATH="$PATH:$HOME/.docker/bin"
-export PATH="$HOME/Projects/99designs/99dev/bin:$PATH"
-
-# Set up nvm to manage node versions
-export NVM_DIR="$HOME/.nvm"
-[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && . "$(brew --prefix)/opt/nvm/nvm.sh" # This loads nvm
-[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && . "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
-
-# Set up rbenv to manage ruby version - uncomment if applicable
-# eval "$(rbenv init -)"
-
-# Don't use the public Go proxy to download internal 99designs/Vista dependencies
-export GOPRIVATE=github.com/99designs,gitlab.com/vistaprint-org/99designs,go.99designs.dev,gitlab.com/vistaprint-org/expert-services
-export PICO_SDK_PATH="$HOME/pico-sdk"
-
-# opencode
-export PATH=/Users/jolanesynott/.opencode/bin:$PATH
-
-# Load secrets from Apple Keychain into environment
-# First time around ensure you select "Always Allow" when asked for system password
-export PORTKEY_API_KEY=$(security find-generic-password -a "$USER" -s "PORTKEY_API_KEY" -w)
-export GITLAB_TOKEN=$(security find-generic-password -a "$USER" -s "GITLAB_TOKEN" -w)
-export SNYK_TOKEN=$(security find-generic-password -a "$USER" -s "SNYK_TOKEN" -w)
-export VP_ARTIFACTORY_TOKEN=$(security find-generic-password -a "$USER" -s "VP_ARTIFACTORY_TOKEN" -w)
-export CT_ARTIFACTORY_TOKEN=$(security find-generic-password -a "$USER" -s "CT_ARTIFACTORY_TOKEN" -w)
-
-eval "$(starship init zsh)"
-
-# ls => eza
-alias ls='eza --tree --icons --level=1'
-alias ll='eza -lah --icons'
-alias tt='eza --tree --level=2 --icons'
-
-# cat => bat
-alias cat="bat"
-
-# better directory navigation
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-
-alias reload='source ~/.zshrc'
-
-take() {
-  mkdir -p "$1" && cd "$1"
-}
-
-sql() {
-  op run --env-file="$HOME/Library/Application Support/lazysql/passwords" -- lazysql
-}
+unset config_file
+unset zsh_config_files
