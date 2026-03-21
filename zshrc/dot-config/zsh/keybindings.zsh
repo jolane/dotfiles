@@ -11,3 +11,6 @@ bindkey "${terminfo[kcud1]}" history-beginning-search-forward-end
 
 bindkey '^R' history-incremental-search-backward
 bindkey '^@' expand-or-complete
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
