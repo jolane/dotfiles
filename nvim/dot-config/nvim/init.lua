@@ -10,7 +10,4 @@ require("config.lazy")
 require("config.lsp")
 require("config.filetypes")
 
-
-
-
-
+vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
