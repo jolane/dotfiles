@@ -15,6 +15,9 @@ return {
     ".git",
     "package.json",
     "eslint.config.js",
+    "eslint.config.cjs",
+    "eslint.config.mjs",
+    "eslint.config.ts",
     ".eslintrc",
     ".eslintrc.js",
     ".eslintrc.cjs",
@@ -31,10 +34,4 @@ return {
       mode = "location",
     },
   },
-  on_attach = function(_, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll",
-    })
-  end,
 }
